@@ -22,5 +22,5 @@ jobs:
       - name: list files
         run: ls -al
 
-      - name: Execute hell0-world shell script
+      - name: Execute hello-world shell script
         run: sh shell-scripts/hello-world.sh 
