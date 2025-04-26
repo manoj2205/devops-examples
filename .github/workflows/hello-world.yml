@@ -1,0 +1,26 @@
+# Name - 
+name: Workflow to execute hello world shell script
+
+on:
+  # When to execute workflow  
+  push:
+    # Which branch
+    branches:
+      # Branch names
+      - feature/*
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to feature branch
+        uses: actions/checkout@v4
+
+      - name: list files
+        run: ls -al
+
+      - name: Execute hell0-world shell script
+        run: sh shell-scripts/hello-world.sh 
