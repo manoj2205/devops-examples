@@ -23,4 +23,26 @@ jobs:
         run: ls -al
 
       - name: Execute hello-world shell script
-        run: sh shell-scripts/hello-world.sh 
+        run: sh shell-scripts/hello-world.sh
+      
+      # Terraform Example
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+      
+      - name: Terraform Initialization
+        run: terraform init
+      
+      - name: Terraform fmt
+        run: terraform fmt
+      
+      - name: Validating Terraform Scripts
+        run: terraform validate
+      
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Execute Terraform Scripts
+        run: terraform apply --auto-approve
+      
+      - name: Listing all the files
+        run: ls -al
