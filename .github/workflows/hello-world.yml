@@ -1,48 +1,60 @@
 # Name - 
-name: Workflow to execute hello world shell script
+  name: Workflow to execute hello world shell script
 
-on:
-  # When to execute workflow  
-  push:
-    # Which branch
-    branches:
-      # Branch names
-      - feature/*
+  on:
+    # When to execute workflow  
+    push:
+      # Which branch
+      branches:
+        # Branch names
+        - feature/*
+    
+    workflow_dispatch:
   
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout to feature branch
-        uses: actions/checkout@v4
-
-      - name: list files
-        run: ls -al
-
-      - name: Execute hello-world shell script
-        run: sh shell-scripts/hello-world.sh
-      
-      # Terraform Example
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-      
-      - name: Terraform Initialization
-        run: terraform init
-      
-      - name: Terraform fmt
-        run: terraform fmt
-      
-      - name: Validating Terraform Scripts
-        run: terraform validate
-      
-      - name: Terraform Plan
-        run: terraform plan
-
-      - name: Execute Terraform Scripts
-        run: terraform apply --auto-approve
-      
-      - name: Listing all the files
-        run: ls -al
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+  
+      steps:
+        - name: Checkout to feature branch
+          uses: actions/checkout@v4
+  
+        - name: list files
+          run: ls -al
+  
+        - name: Execute hello-world shell script
+          run: sh shell-scripts/hello-world.sh
+        
+        # Terraform Example
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v2
+        
+        - name: Terraform Initialization
+          run: terraform init
+        
+        - name: Terraform fmt
+          run: terraform fmt
+        
+        - name: Validating Terraform Scripts
+          run: terraform validate
+        
+        - name: Terraform Plan
+          run: terraform plan --var="client_id=${CLIENT_ID}" --var="client_secret=${CLIENT_SECRET}" --var="tenant_id=${TENANT_ID}" --var="subscription_id=${SUBSCRIPTION_ID}"
+          env:
+            CLIENT_ID: ${{ secrets.CLIENT_ID }}
+            SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+            CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+            TENANT_ID: ${{ secrets.TENANT_ID }}
+  
+        - name: Execute Terraform Scripts
+          run: terraform apply --auto-approve --var="client_id=${CLIENT_ID}" --var="client_secret=${CLIENT_SECRET}" --var="tenant_id=${TENANT_ID}" --var="subscription_id=${SUBSCRIPTION_ID}"
+          env:
+            CLIENT_ID: ${{ secrets.CLIENT_ID }}
+            SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+            CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+            TENANT_ID: ${{ secrets.TENANT_ID }}
+  
+        
+        - name: Listing all the files
+          run: ls -al
+  

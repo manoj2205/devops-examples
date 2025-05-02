@@ -37,4 +37,4 @@ override.tf.json
 terraform.rc
 
 .terraform.lock.hcl
-hello.txt
+hello*.txt
